@@ -1,0 +1,30 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "sqlite"; url = "file:./dev.db" }
+model Unit {
+  id        Int      @id @default(autoincrement())
+  number    String
+  block     String?
+  ownerName String
+  ownerPhone String?
+  ownerEmail String?
+  charges   Charge[]
+  createdAt DateTime @default(now())
+}
+model Charge {
+  id        Int      @id @default(autoincrement())
+  unit      Unit     @relation(fields: [unitId], references: [id])
+  unitId    Int
+  type      String
+  amount    Float
+  dueDate   DateTime
+  paidAt    DateTime?
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+}
+model Notice {
+  id        Int      @id @default(autoincrement())
+  title     String
+  body      String
+  priority  String   @default("normal")
+  createdAt DateTime @default(now())
+}
