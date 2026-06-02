@@ -1,0 +1,1 @@
+﻿import { PrismaClient } from "@prisma/client"; import { NextResponse } from "next/server"; const prisma = new PrismaClient(); export async function PATCH(req: Request, { params }: { params: { id: string } }) { return NextResponse.json(await prisma.charge.update({ where: { id: Number(params.id) }, data: await req.json() })); }
